@@ -30,12 +30,15 @@ export const loader = async ({ request }) => {
     for (const car of cars) {
       const carMake = car.make?.toLowerCase() || "";
       const shortModel = car.model ? car.model.split(" ")[0] : "";
+      const shortMake = car.make ? car.make.split(" ")[0].toLowerCase() : "";
 
-      if (carMake === searchCar && !seenModels.has(shortModel)) {
+      if (shortMake === searchCar && !seenModels.has(shortModel)) {
         seenModels.add(shortModel);
+        seenModels.add(shortMake);
         matchedCars.push({
           ...car,
           model: shortModel,
+          make: shortMake,
           image: createCarImage(car, ""),
         });
       }
@@ -44,30 +47,11 @@ export const loader = async ({ request }) => {
     offset += limit;
   }
   return { cars: matchedCars, searchCar };
-
-  // const transformed = cars
-  //   .map((car) => {
-  //     const shortModel = car.model ? car.model.split(" ")[0] : "";
-  //     return { ...car, model: shortModel };
-  //   })
-  //   .filter((car) => {
-  //     if (seenModels.has(car.model)) {
-  //       return false; // skip duplicate
-  //     }
-  //     seenModels.add(car.model);
-  //     return true;
-  //   });
-
-  // const carsWithImg = transformed.map((car) => ({
-  //   ...car,
-  //   image: createCarImage(car, ""),
-  // }));
-  // return { cars: transformed };
 };
 
 const Landing = () => {
   const { cars } = useLoaderData();
-  console.log(cars);
+  // console.log(cars);
 
   return (
     <>

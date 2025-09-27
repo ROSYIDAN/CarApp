@@ -1,0 +1,19 @@
+✏️ #1 ISSUES 
+ok i have another issue, on the table was like this the name on make column that not same as make from my search key input was get that J.K Motors, so the first 10 of this data was that J.K Motors data not the bmw :
+[NO]  [MAKE]
+  10      J.K Motors
+  11      BMW
+my solution was on "make" param that is going to be as key search on the api i want to make it some check first if the make on the object is being fetched is same as the parameter.
+so if the key make = bmw then after we get the data we checked if all of the 10 data  on make props the value was same as the make key parameter if not depending on data that not same
+
+✏️ #2 ISSUES 
+{
+    "make": "BMW",
+    "model": "328i/328is",
+    ....
+}
+
+ <Link className="btn" to={`/car/${make}/${model}`} state={carData}>
+          Details
+</Link>
+then is going to set the url https://...328i/328is

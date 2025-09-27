@@ -1,11 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <div className="nav-center">
-        <span className="logo">MixMaster</span>
+        <span
+          className="logo"
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+        >
+          CarApp
+        </span>
         <div className="nav-links">
           <NavLink to="/" className="nav-link">
             Home

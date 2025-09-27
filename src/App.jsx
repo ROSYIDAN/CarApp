@@ -10,6 +10,7 @@ import {
 } from "./pages";
 import { loader as landingLoader } from "./pages/Landing";
 import { loader as SingleCarLoader } from "./pages/Car";
+import { action as newsLatterAction } from "./pages/Newsletter";
 
 const router = createBrowserRouter([
   {
@@ -28,11 +29,12 @@ const router = createBrowserRouter([
         element: <Car />,
         loader: SingleCarLoader,
       },
-      { path: "newsletter", element: <Newsletter /> },
-      // {
-      //   path: "*",
-      //   element: <Error />,
-      // },
+      {
+        path: "newsletter",
+        element: <Newsletter />,
+        action: newsLatterAction,
+        errorElement: <SinglePageError />,
+      },
     ],
   },
 ]);
