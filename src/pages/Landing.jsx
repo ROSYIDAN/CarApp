@@ -28,7 +28,6 @@ export const loader = async ({ request }) => {
     if (!cars || cars.length === 0) break;
 
     for (const car of cars) {
-      const carMake = car.make?.toLowerCase() || "";
       const shortModel = car.model ? car.model.split(" ")[0] : "";
       const shortMake = car.make ? car.make.split(" ")[0].toLowerCase() : "";
 
@@ -51,7 +50,6 @@ export const loader = async ({ request }) => {
 
 const Landing = () => {
   const { cars } = useLoaderData();
-  // console.log(cars);
 
   return (
     <>
