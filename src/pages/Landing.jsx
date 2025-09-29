@@ -50,13 +50,24 @@ export const fetchCars = async ({ searchCar }) => {
   return { cars: matchedCars };
 };
 
-export const loader = async () => {
-  const cars = await fetchCars({ searchCar: "nissan" });
-  return { carsLoader: cars };
-};
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    const url = new URL(request.url);
+    let searchTerm = url.searchParams.get("search");
+    if (!searchTerm) {
+      searchTerm = "nissan";
+    }
+
+    const cars = await queryClient.ensureQueryData({
+      queryKey: ["cars", searchTerm],
+      queryFn: () => fetchCars({ searchCar: searchTerm }),
+    });
+    return { carsLoader: cars, searchTerm };
+  };
 export const useSearchCars = (searchCar) => {
   return useQuery({
-    queryKey: ["cars", searchCar || "nissan"],
+    queryKey: ["search", searchCar || "nissan"],
     queryFn: async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       return fetchCars({ searchCar });
@@ -66,12 +77,11 @@ export const useSearchCars = (searchCar) => {
 };
 
 const Landing = () => {
-  const { carsLoader } = useLoaderData();
-  const [searchCar, setSearchCar] = useState("");
-  const [searchTrigger, setSearchTrigger] = useState("");
-  const { data, isFetching, isError } = useSearchCars(searchTrigger);
+  const { carsLoader, searchTerm } = useLoaderData();
+  const { data, isFetching } = useSearchCars(searchTerm);
+  console.log(data);
 
-  const carsToDisplay = searchTrigger ? data?.cars : carsLoader.cars;
+  const carsToDisplay = searchTerm ? data?.cars : carsLoader.cars;
   if (isFetching) {
     return (
       <div style={{ display: "grid", justifyContent: "center" }}>
@@ -81,11 +91,7 @@ const Landing = () => {
   }
   return (
     <>
-      <SearchForm
-        searchCar={searchCar} // controlled input
-        setSearchCar={setSearchCar} // setter for typing
-        setSearchTrigger={setSearchTrigger} // pass to handle submit
-      />
+      <SearchForm searchTerm={searchTerm} />
       <CarList cars={carsToDisplay} />;
     </>
   );
