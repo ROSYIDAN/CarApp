@@ -22,7 +22,7 @@ const Car = () => {
     year,
     image,
   } = carData;
-  // const { description, model, make, engines, drive_types, year } = car;
+
   console.log(carData);
   if (!carData) return <Navigate to={"/"} />;
   return (
