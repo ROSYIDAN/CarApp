@@ -9,7 +9,6 @@ import {
   Car,
 } from "./pages";
 import { loader as landingLoader } from "./pages/Landing";
-import { loader as SingleCarLoader } from "./pages/Car";
 import { action as newsLatterAction } from "./pages/Newsletter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -34,9 +33,8 @@ const router = createBrowserRouter([
       },
       { path: "about", element: <About /> },
       {
-        path: "car/:brand",
+        path: "car/:id",
         element: <Car />,
-        loader: SingleCarLoader,
       },
       {
         path: "newsletter",

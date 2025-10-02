@@ -4,7 +4,6 @@ import { SearchForm } from "../components/SearchForm";
 import axios from "axios";
 import { CarList } from "../components/CarList";
 import { createCarImage } from "../utils/CreateCarImage";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 const BASE_URL =
@@ -79,7 +78,7 @@ export const useSearchCars = (searchCar) => {
 const Landing = () => {
   const { carsLoader, searchTerm } = useLoaderData();
   const { data, isFetching } = useSearchCars(searchTerm);
-  console.log(data);
+  // console.log(data);
 
   const carsToDisplay = searchTerm ? data?.cars : carsLoader.cars;
   if (isFetching) {

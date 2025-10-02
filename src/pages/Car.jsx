@@ -1,16 +1,10 @@
 import Wrapper from "../assets/wrappers/CocktailPage";
 import axios from "axios";
 import { Link, Navigate, useLoaderData, useLocation } from "react-router-dom";
-export const loader = async ({ params }) => {
-  const { brand, model } = params;
-  console.log(brand, model);
 
-  return { car: "hello" };
-};
 const Car = () => {
-  const { car } = useLoaderData();
   const location = useLocation();
-  const carData = location.state;
+  const car = location.state;
   const {
     make,
     model,
@@ -21,10 +15,10 @@ const Car = () => {
     vclass,
     year,
     image,
-  } = carData;
+  } = car;
 
-  console.log(carData);
-  if (!carData) return <Navigate to={"/"} />;
+  console.log(car);
+  if (!car) return <Navigate to={"/"} />;
   return (
     <Wrapper>
       <header>
@@ -33,7 +27,14 @@ const Car = () => {
         </Link>
       </header>
       <div className="drink">
-        <img src={image} alt={"name"} className="img" />
+        <div className="img-container" style={{ display: "flex" }}>
+          <img
+            src={image}
+            alt={"name"}
+            className="img"
+            style={{ margin: "auto" }}
+          />
+        </div>
         <div className="drink-info">
           <p>
             <span className="drink-data">Name:</span> {`${make} ${model}`}
